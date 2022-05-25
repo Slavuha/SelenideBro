@@ -1,9 +1,10 @@
-import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.conditions.Enabled;
+import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -15,30 +16,25 @@ import java.util.Set;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
-public class MainPage {
-    private final SelenideElement singIn = $("a.login");
-    // can not find needed xpath
-    final SelenideElement WHOMENBUTTON = $x("//li/a[@title=\"Dresses\"]");
-    By womenCategory = By.cssSelector("a[title*='Women']");
-    By casualDressesCategory = By.cssSelector("a[title='Women'] + ul a[title='Casual Dresses']");
-    By summerDressesCategory = By.cssSelector("a[title='Women'] + ul a[title='Summer Dresses']");
+public class AutorizathionPage {
 
-    public MainPage() {
+    private final SelenideElement fieldEmail = $x("//input[@name=\"email_create\"]");
+    private final SelenideElement registeryButton = $x("//i [@class=\"icon-user left\"]");
+    private final SelenideElement name = $x("//*[@name=\"customer_firstname\"]");
+    Faker faker = new Faker();
 
+    public void enterEmail(){
+        fieldEmail.setValue(faker.internet().emailAddress());
     }
 
-    public void openSite(String url) {
-        Selenide.open(url);
-    }
-
-    public void clickOnSingInButton() {
-        singIn.click();
+    public void clickOnRegisteryButtun(){
+        registeryButton.click();
     }
 
 
-
-    public MainPage navigateToSummerDresses() {
-        WebDriver driver = new WebDriver() {
+    public AutorizathionPage waitOnPage() {
+        WebDriver driver= new WebDriver() {
+      // Я не понял чего оно переопределило все эти методы со старта, но решил их не трогать пусть работает
             @Override
             public void get(String s) {
 
@@ -104,28 +100,15 @@ public class MainPage {
                 return null;
             }
         };
-        Actions actions = new Actions(driver);
-
-
-
-
-    WebElement womenLink = driver.findElement(womenCategory);
-
-        WebElement summerDressesLink = driver.findElement(summerDressesCategory);
-        actions
-                .moveToElement(womenLink)
-                .moveToElement(summerDressesLink)
-                .click()
-                .perform();
         WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.pollingEvery(Duration.ofSeconds(30));
         wait.withTimeout(Duration.ofSeconds(30));
         wait.ignoring(NoSuchElementException.class);
 
-        wait.until(ExpectedConditions.elementToBeClickable(womenCategory));
+        wait.until(ExpectedConditions.elementToBeClickable(name));
+        return this;}
 
-        return new MainPage();
-    }
+
 
 
 }

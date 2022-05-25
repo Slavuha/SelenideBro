@@ -4,6 +4,11 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.NoSuchElementException;
 
 abstract public class BaseTest {
     public void setUp(){
@@ -13,6 +18,8 @@ abstract public class BaseTest {
         Configuration.browserSize = "1366*768";
         Configuration.headless = true;
     }
+
+
 
     @Before
     public void init(){
