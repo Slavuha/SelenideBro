@@ -2,13 +2,17 @@
 import com.codeborne.selenide.impl.Waiter;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.ui.Wait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TestWebBro extends BaseTest {
    private final static String baseUrl = "http://automationpractice.com/";
+Logger logger = LoggerFactory.getLogger(TestWebBro.class);
 
-     @Test
+            @Test
            public void testBro() throws InterruptedException {
-
+logger.info("Start test");
+                logger.debug("Debag?");
       MainPage mainPage = new MainPage();
       mainPage.openSite(baseUrl);
       mainPage.clickOnSingInButton();
